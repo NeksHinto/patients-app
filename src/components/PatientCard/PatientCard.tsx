@@ -5,6 +5,8 @@ import { Link } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import EditIcon from '@mui/icons-material/Edit';
 import { PatientContext } from '../../contexts/App/app-context';
 
@@ -20,6 +22,7 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
     setExpandedId,
     setEditModalOpen,
     setEditedPatient,
+    isMobile
   } = useContext(PatientContext);
   const [isExpanded, setIsExpanded] = useState(expandedId === patient.id);
 
@@ -71,8 +74,8 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
   };
 
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+    <Card data-testid="patient-card" sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', flexDirection: isMobile ? 'column' : 'row', }}>
         <Box sx={{ display: 'flex', flexDirection: isExpanded ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', my: isExpanded ? 2 : 0 }}>
           <Avatar alt={patient.name} src={patient.avatar} sx={{ width: 100, height: 100, borderRadius: 0 }} />
           <Box sx={{ display: 'flex', flexDirection: 'column', ml: isExpanded ? 0 : 2, minWidth: '200px', alignItems: isExpanded ? 'center' : 'left' }}>
@@ -91,9 +94,9 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
             </Typography>
           </Box>
         </Box>
-        {isExpanded && <Divider orientation="vertical" flexItem variant="middle" />}
+        {isExpanded && <Divider orientation={isMobile ? 'horizontal' : 'vertical'} flexItem variant="middle" />}
         <Box sx={{ display: 'flex', ml: 2 }}>
-          <Collapse orientation="horizontal" in={isExpanded} timeout="auto" unmountOnExit>
+          <Collapse orientation={isMobile ? 'vertical' : 'horizontal'} in={isExpanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography variant="body2" color="text.secondary" component="div">
                 {patient.description}
@@ -104,12 +107,16 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
         <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
           <Tooltip title={isExpanded ? 'Show less' : 'Show more'}>
             <IconButton aria-label={isExpanded ? 'collapse' : 'expand'} onClick={handleShowMore}>
-              {isExpanded ? <KeyboardArrowLeftIcon /> : <KeyboardArrowRightIcon />}
+              {isExpanded ? (
+                isMobile ? <KeyboardArrowUpIcon /> : <KeyboardArrowLeftIcon />
+              ) : (
+                isMobile ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />
+              )}
             </IconButton>
           </Tooltip>
         </Box>
       </Box>
-    </Card >
+    </Card>
   );
 };
 
