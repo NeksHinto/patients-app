@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Modal, Box, TextField, Button, Grid, Typography, Stack } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { PatientContext } from '../../contexts/app-context';
+import { PatientContext } from '../../contexts/App/app-context';
 
 const EditPatientModal: React.FC = () => {
   const {
@@ -45,14 +45,27 @@ const EditPatientModal: React.FC = () => {
   });
 
   const handleSubmit = (values: any) => {
-    const updatedPatients = patients.map((pat) =>
-      pat.id === editedPatient?.id ? { ...pat, ...values } : pat
-    );
-    setPatients(updatedPatients);
+    if (editedPatient) {
+      const updatedPatients = patients.map((pat) =>
+        pat.id === editedPatient.id ? { ...pat, ...values } : pat
+      );
+      setPatients(updatedPatients);
+    } else {
+      const newConsecutiveId = patients.length > 0 ? Math.max(...patients.map(pat => parseInt(pat.id))) + 1 : 1;
+      const newPatient = {
+        id: newConsecutiveId.toString(),
+        ...values,
+      };
+      const updatedPatients = [...patients, newPatient];
+      setPatients(updatedPatients);
+    }
     handleClose();
   };
+
+
+
   return (
-    <Modal open={editModalOpen} onClose={handleClose}>
+    <Modal data-testid="edit-patient-modal" open={editModalOpen} onClose={handleClose}>
       <Box
         sx={{
           position: 'absolute',

@@ -6,7 +6,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import EditIcon from '@mui/icons-material/Edit';
-import { PatientContext } from '../../contexts/app-context';
+import { PatientContext } from '../../contexts/App/app-context';
 
 interface PatientCardProps {
   patient: Patient;
