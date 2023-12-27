@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PatientCard from '../PatientCard/PatientCard';
 import { Container, Grid, Box } from '@mui/material';
-import { PatientContext } from '../../contexts/app-context';
+import { PatientContext } from '../../contexts/App/app-context';
 
 const PatientList: React.FC = () => {
 	const { patients, expandedId, setExpandedId } = useContext(PatientContext);
@@ -11,7 +11,7 @@ const PatientList: React.FC = () => {
 	};
 
 	return (
-		<Container maxWidth="lg">
+		<Container data-testid="patient-list" maxWidth="lg">
 			<Box
 				sx={{
 					backgroundColor: '#FFEEB6',
@@ -24,6 +24,7 @@ const PatientList: React.FC = () => {
 						patients.map((patient) => (
 							<Grid
 								key={patient.id}
+								data-testid='patient-card'
 								item
 								xs={12}
 								sm={expandedId === patient.id ? 12 : 6}
