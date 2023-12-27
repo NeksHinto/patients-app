@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Sistema de Gestión de Datos de Pacientes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es una Aplicación Web diseñada para administrar la información de pacientes médicos. Permite visualizar la lista de pacientes, editar sus detalles y agregar nuevos pacientes. Cabe destacar que dicha información no es necesariamente persistente.
 
-## Available Scripts
+## Introducción
 
-In the project directory, you can run:
+La aplicación fue realizada con React, utilizando componentes reutilizables de Material-UI para la interfaz de usuario. Los pacientes se muestran en forma de cards, cada una con detalles básicos, como el nombre, su página web, y una opción para ver más información.
 
-### `npm start`
+## Estructura del Proyecto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+El proyecto está estructurado de la siguiente manera:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `components/`: Contiene los componentes reutilizables de la interfaz de usuario.
+- `contexts/`: Almacena los contextos de la aplicación para gestionar el estado global de los pacientes.
+- `pages/`: Las páginas principales de la aplicación, como la página de inicio.
+- `services/`: Archivos para interactuar con servicios externos, como una API (en este caso, para obtener datos de pacientes).
+- `styles/`: Estilos globales o específicos para la aplicación.
+- `types/`: Define los tipos de datos utilizados en la aplicación.
+- `utils/`: Utilidades y funciones de ayuda.
 
-### `npm test`
+## Instalación
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clonar el repositorio:**
+   ```sh
+   git clone https://github.com/NeksHinto/patients-app
+   cd patients-app
+   ```
 
-### `npm run build`
+2. **Instalar dependencias:**
+   ```sh
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Uso
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Ejecutar la aplicación:**
+   ```sh
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Acceder a la aplicación:**
+   Desde el browser acceder a `http://localhost:3000`.
 
-### `npm run eject`
+3. **Otros Comandos:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   - `npm test`: Ejecuta las pruebas.
+   - `npm run build`: Construye la aplicación para producción en la carpeta `build`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Dependencias Principales
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [React](https://es.reactjs.org/): Framework de JavaScript para construir interfaces de usuario.
+- [Material-UI](https://mui.com/): Librería de componentes para React basada en Material Design.
+- [Yup](https://github.com/jquense/yup): Librería para validación de esquemas en formularios.
+- [Jest](https://jestjs.io/): Framework de pruebas para JavaScript.
+- [axios](https://github.com/axios/axios): Cliente HTTP basado en promesas para el browser y Node.js.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Licencia
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Este proyecto está bajo la Licencia [MIT](https://opensource.org/licenses/MIT).
