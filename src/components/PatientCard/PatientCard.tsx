@@ -5,6 +5,7 @@ import { Link } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import EditIcon from '@mui/icons-material/Edit';
 import { PatientContext } from '../../contexts/app-context';
 
 interface PatientCardProps {
@@ -14,8 +15,18 @@ interface PatientCardProps {
 }
 
 const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
-  const { expandedId, setExpandedId } = useContext(PatientContext);
+  const {
+    expandedId,
+    setExpandedId,
+    setEditModalOpen,
+    setEditedPatient,
+  } = useContext(PatientContext);
   const [isExpanded, setIsExpanded] = useState(expandedId === patient.id);
+
+  const handleEdit = () => {
+    setEditedPatient(patient);
+    setEditModalOpen(true);
+  };
 
   useEffect(() => {
     setIsExpanded(expandedId === patient.id);
@@ -32,7 +43,7 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
       <span>
         <Link href={patient.website} target="_blank" rel="noopener noreferrer" underline="none">
           Visit Website
-          <OpenInNewIcon fontSize="small" sx={{ ml: 0.5, verticalAlign: 'middle' }} />
+          <OpenInNewIcon sx={{ ml: 0.5, verticalAlign: 'middle', fontSize: '16px' }} />
         </Link>
       </span>
     </Tooltip>
@@ -47,7 +58,7 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
       return (
         <Tooltip title={patient.name} arrow placement="top">
           <Typography component="div" variant="h5" sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {getShortenedName(patient.name, 13)}
+            {getShortenedName(patient.name, 11)}
           </Typography>
         </Tooltip>
       );
@@ -65,9 +76,16 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
         <Box sx={{ display: 'flex', flexDirection: isExpanded ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', my: isExpanded ? 2 : 0 }}>
           <Avatar alt={patient.name} src={patient.avatar} sx={{ width: 100, height: 100, borderRadius: 0 }} />
           <Box sx={{ display: 'flex', flexDirection: 'column', ml: isExpanded ? 0 : 2, minWidth: '200px', alignItems: isExpanded ? 'center' : 'left' }}>
-            <Typography component="div" variant="h5" sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {renderFullName()}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+              <Typography component="div" variant="h5" sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {renderFullName()}
+              </Typography>
+              <Tooltip title="Edit">
+                <IconButton aria-label="edit" onClick={handleEdit}>
+                  <EditIcon sx={{ verticalAlign: 'middle', fontSize: '16px' }} />
+                </IconButton>
+              </Tooltip>
+            </Box>
             <Typography variant="body1" color="text.secondary" component="div">
               {renderWebsiteLink()}
             </Typography>
