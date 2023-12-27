@@ -12,7 +12,9 @@ const EditPatientModal: React.FC = () => {
     setEditedPatient,
     patients,
     setPatients,
-    isMobile
+    isMobile,
+    setShowNotification,
+    setNotificationMessage,
   } = useContext(PatientContext);
 
   const handleClose = () => {
@@ -34,7 +36,7 @@ const EditPatientModal: React.FC = () => {
       .max(50, 'Name should be at most 50 characters long.'),
     description: Yup.string()
       .required('Description is required.')
-      .max(300, 'Description should be at most 300 characters long.'),
+      .max(1000, 'Description should be at most 1000 characters long.'),
     website: Yup.string()
       .url('Invalid URL format.')
       .required('Website is required.')
@@ -60,9 +62,9 @@ const EditPatientModal: React.FC = () => {
       setPatients(updatedPatients);
     }
     handleClose();
+    setShowNotification(true);
+    setNotificationMessage('Patient saved successfully!');
   };
-
-
 
   return (
     <Modal data-testid="edit-patient-modal" open={editModalOpen} onClose={handleClose}>
@@ -145,7 +147,7 @@ const EditPatientModal: React.FC = () => {
                     <Button variant="outlined" onClick={handleClose}>
                       Cancel
                     </Button>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button data-testid="save-button" type="submit" variant="contained" color="primary">
                       Save
                     </Button>
                   </Stack>
@@ -155,7 +157,7 @@ const EditPatientModal: React.FC = () => {
           )}
         </Formik>
       </Box>
-    </Modal >
+    </Modal>
   );
 };
 
