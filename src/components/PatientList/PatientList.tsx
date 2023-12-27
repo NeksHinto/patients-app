@@ -1,27 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PatientCard from '../PatientCard/PatientCard';
-import { Patient } from '../../types/Patient';
-import { patientsApi } from '../../services/patients-api';
+import { Container, Grid, Box } from '@mui/material';
+import { PatientContext } from '../../contexts/app-context';
 
 const PatientList: React.FC = () => {
-	const [patients, setPatients] = useState<Patient[]>([]);
+	const { patients, expandedId, setExpandedId } = useContext(PatientContext);
 
-	useEffect(() => {
-		patientsApi.fetchPatients()
-			.then((data) => {
-				setPatients(data);
-			})
-			.catch((error) => {
-				console.error('Error fetching patients:', error.message);
-			});
-	}, []);
+	const handleExpandCard = (id: string) => {
+		setExpandedId(expandedId === id ? id : '');
+	};
 
 	return (
-		<div>
-			{patients?.length > 0 && patients.map((patient) => (
-				<PatientCard key={patient.id} patient={patient} />
-			))}
-		</div>
+		<Container maxWidth="lg">
+			<Box
+				sx={{
+					backgroundColor: '#FFEEB6',
+					borderRadius: '4px',
+					padding: '20px'
+				}}
+			>
+				<Grid container spacing={2} justifyContent="flex-start">
+					{patients?.length > 0 &&
+						patients.map((patient) => (
+							<Grid
+								key={patient.id}
+								item
+								xs={12}
+								sm={expandedId === patient.id ? 12 : 6}
+								md={expandedId === patient.id ? 12 : 4}
+								display="flex"
+								justifyContent="center"
+							>
+								<div style={{ width: '100%' }}>
+									<PatientCard
+										patient={patient}
+										expanded={expandedId === patient.id}
+										onExpand={handleExpandCard}
+									/>
+								</div>
+							</Grid>
+						))}
+				</Grid>
+			</Box>
+		</Container>
 	);
 };
 
